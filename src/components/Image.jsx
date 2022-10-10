@@ -1,12 +1,10 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; //https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes
 import { Context } from "../AppContext";
-
-// https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes
 
 function Image({ className, img }) {
   const [hovered, setHovered] = useState(false);
-  const { toggleFavorite } = useContext(Context);
+  const { toggleFavorite, addToCart, cartItems } = useContext(Context);
 
   function heartIcon() {
     if (img.isFavorite) {
@@ -26,7 +24,19 @@ function Image({ className, img }) {
     }
   }
 
-  const cartIcon = hovered && <i className="ri-add-circle-line cart"></i>;
+  function cartIcon() {
+    const alreadyInCart = cartItems.some((item) => item.id === img.id);
+    if (alreadyInCart) {
+      return <i className="ri-shopping-cart-fill cart"></i>;
+    } else if (hovered) {
+      return (
+        <i
+          className="ri-add-circle-line cart"
+          onClick={() => addToCart(img)}
+        ></i>
+      );
+    }
+  }
 
   return (
     <div
@@ -36,7 +46,7 @@ function Image({ className, img }) {
     >
       <img src={img.url} className="image-grid" />
       {heartIcon()}
-      {cartIcon}
+      {cartIcon()}
     </div>
   );
 }
