@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types"; //https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes
+import PropTypes from "prop-types"; 
 import { Context } from "../AppContext";
+// import useHover from "../hooks/useHover"  //not used because broke the cart page randomly
 
 function Image({ className, img }) {
   const [hovered, setHovered] = useState(false);
